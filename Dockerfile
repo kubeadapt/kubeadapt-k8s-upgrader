@@ -22,12 +22,10 @@ RUN go mod download
 # Copy source code
 COPY . .
 
-# Build the application for target platform with version info.
-# Symbol table and DWARF info preserved (no -w -s) for clearer panic stack
-# traces and pprof profiling.
+# Build the application for target platform with version info
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
-    -ldflags="-X main.Version=${VERSION} -X main.CommitHash=${COMMIT_HASH} -X main.BuildTime=${BUILD_TIME}" \
-    -o app ./cmd/app
+    -ldflags="-w -s -X main.Version=${VERSION} -X main.CommitHash=${COMMIT_HASH} -X main.BuildTime=${BUILD_TIME}" \
+    -o upgrader ./cmd/upgrader
 
 # Runtime stage - distroless for minimal attack surface
 FROM gcr.io/distroless/static:nonroot
@@ -35,6 +33,6 @@ FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 
 # Copy the binary from builder stage
-COPY --from=builder /app/app /app
+COPY --from=builder /app/upgrader /upgrader
 
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/upgrader"]

@@ -1,20 +1,20 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: kubeadapt-k8s-upgrader
-  description: "In-cluster Helm upgrade operator for Kubeadapt charts"
+  name: kubeadapt-upgrader
+  description: "Kubeadapt auto-upgrader"
   annotations:
-    github.com/project-slug: kubeadapt/kubeadapt-k8s-upgrader
+    github.com/project-slug: kubeadapt/kubeadapt-upgrader
     backstage.io/techdocs-ref: dir:.
     backstage.io/adr-location: docs/adrs
     backstage.io/source-template: template:default/create-public-service-infra
-    argocd/app-name: kubeadapt-k8s-upgrader
-    backstage.io/kubernetes-id: kubeadapt-k8s-upgrader
+    argocd/app-name: kubeadapt-upgrader
+    backstage.io/kubernetes-id: kubeadapt-upgrader
     backstage.io/kubernetes-namespace: saas
-    terasky.backstage.io/crossplane-cluster: kubeadapt-hetzner
+    terasky.backstage.io/crossplane-cluster: kubeadapt-eks
     terasky.backstage.io/crossplane-resource: publicserviceinfras.platform.kubeadapt.io
     terasky.backstage.io/crossplane-version: v2
-    terasky.backstage.io/composite-name: kubeadapt-k8s-upgrader-8n92s
+    terasky.backstage.io/composite-name: kubeadapt-upgrader-hzbwg
     terasky.backstage.io/composite-group: platform.kubeadapt.io
     terasky.backstage.io/composite-version: v1alpha1
     terasky.backstage.io/composite-plural: publicserviceinfras
@@ -27,7 +27,7 @@ metadata:
     - kubeadapt
     - public
   links:
-    - url: https://github.com/kubeadapt/kubeadapt-k8s-upgrader
+    - url: https://github.com/kubeadapt/kubeadapt-upgrader
       title: GitHub Repository
       icon: github
 spec:
@@ -36,15 +36,15 @@ spec:
   owner: group:default/core
   system: kubeadapt-platform
   dependsOn:
-    - resource:default/kubeadapt-k8s-upgrader-github-repo
-    - resource:default/kubeadapt-k8s-upgrader-ecr-public
-    - resource:default/kubeadapt-k8s-upgrader-github-oidc-role
+    - resource:default/kubeadapt-upgrader-github-repo
+    - resource:default/kubeadapt-upgrader-ecr-public
+    - resource:default/kubeadapt-upgrader-github-oidc-role
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: kubeadapt-k8s-upgrader-github-repo
-  description: "GitHub repository for kubeadapt-k8s-upgrader"
+  name: kubeadapt-upgrader-github-repo
+  description: "GitHub repository for kubeadapt-upgrader"
   tags:
     - github
     - repository
@@ -55,13 +55,13 @@ spec:
   owner: group:default/core
   system: kubeadapt-platform
   dependencyOf:
-    - component:default/kubeadapt-k8s-upgrader
+    - component:default/kubeadapt-upgrader
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: kubeadapt-k8s-upgrader-ecr-public
-  description: "ECR Public repository for kubeadapt-k8s-upgrader"
+  name: kubeadapt-upgrader-ecr-public
+  description: "ECR Public repository for kubeadapt-upgrader"
   tags:
     - ecr-public
     - aws
@@ -72,13 +72,13 @@ spec:
   owner: group:default/core
   system: kubeadapt-platform
   dependencyOf:
-    - component:default/kubeadapt-k8s-upgrader
+    - component:default/kubeadapt-upgrader
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: kubeadapt-k8s-upgrader-github-oidc-role
-  description: "GitHub Actions OIDC IAM role for kubeadapt-k8s-upgrader CI/CD"
+  name: kubeadapt-upgrader-github-oidc-role
+  description: "GitHub Actions OIDC IAM role for kubeadapt-upgrader CI/CD"
   tags:
     - iam
     - aws
@@ -89,4 +89,4 @@ spec:
   owner: group:default/core
   system: kubeadapt-platform
   dependencyOf:
-    - component:default/kubeadapt-k8s-upgrader
+    - component:default/kubeadapt-upgrader
