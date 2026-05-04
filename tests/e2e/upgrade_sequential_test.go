@@ -9,7 +9,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/tests/e2e/helpers"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/tests/e2e/helpers"
 )
 
 // TestSequentialMultiHopUpgrade verifies that the upgrader executes a 3-version
@@ -24,7 +24,7 @@ func TestSequentialMultiHopUpgrade(t *testing.T) {
 	if err := stub.Flush(); err != nil {
 		t.Fatalf("flushing stub: %v", err)
 	}
-	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader"); err != nil {
+	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader"); err != nil {
 		t.Fatalf("cleaning up stale jobs: %v", err)
 	}
 	// Wait for any previous upgrader pods to fully terminate.
@@ -46,7 +46,7 @@ func TestSequentialMultiHopUpgrade(t *testing.T) {
 		"agent.image.repository":             "localhost/upgrade-stub",
 		"agent.image.tag":                    "e2e-test",
 		"agent.image.pullPolicy":             "Never",
-		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-upgrader",
+		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-k8s-upgrader",
 		"agent.autoUpgrade.image.tag":        "e2e-test",
 		"agent.autoUpgrade.image.pullPolicy": "Never",
 		"agent.config.backendUrl":            "http://upgrade-stub.kubeadapt-system.svc:8080",

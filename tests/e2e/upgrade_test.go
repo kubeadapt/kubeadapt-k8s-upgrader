@@ -9,12 +9,12 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/tests/e2e/cluster"
-	"github.com/kubeadapt/kubeadapt-upgrader/tests/e2e/helpers"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/tests/e2e/cluster"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/tests/e2e/helpers"
 )
 
 const (
-	ClusterName              = "kubeadapt-upgrader-e2e"
+	ClusterName              = "kubeadapt-k8s-upgrader-e2e"
 	TestNamespace            = "kubeadapt-system"
 	StubNodePort             = "30082"
 	ChartmuseumNodePort      = "30083"
@@ -22,7 +22,7 @@ const (
 	IntermediateChartVersion = "0.17.1"
 	TargetChartVersion       = "0.18.0"
 	HelmReleaseName          = "kubeadapt-test"
-	UpgraderImage            = "localhost/kubeadapt-upgrader:e2e-test"
+	UpgraderImage            = "localhost/kubeadapt-k8s-upgrader:e2e-test"
 	StubImage                = "localhost/upgrade-stub:e2e-test"
 	ChartmuseumImage         = "ghcr.io/helm/chartmuseum:v0.16.2"
 	HelmJobImage             = "alpine/helm:3.14.3"
@@ -49,8 +49,8 @@ func TestMain(m *testing.M) {
 func runMain(m *testing.M) int {
 	// Find repo root: go up from tests/e2e/ to the module root, then workspace root
 	_, filename, _, _ := runtime.Caller(0)
-	// filename = .../active/kubeadapt-upgrader/tests/e2e/upgrade_test.go
-	// repoRoot = 4 levels up: tests/e2e → tests → kubeadapt-upgrader → active → workspace
+	// filename = .../active/kubeadapt-k8s-upgrader/tests/e2e/upgrade_test.go
+	// repoRoot = 4 levels up: tests/e2e → tests → kubeadapt-k8s-upgrader → active → workspace
 	repoRoot = filepath.Join(filepath.Dir(filename), "..", "..", "..", "..")
 
 	var err error

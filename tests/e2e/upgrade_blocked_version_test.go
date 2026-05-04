@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/tests/e2e/helpers"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/tests/e2e/helpers"
 )
 
 // TestBlockedVersion verifies that the upgrader does NOT upgrade when the target version is blocked.
@@ -26,7 +26,7 @@ func TestBlockedVersion(t *testing.T) {
 		t.Fatalf("flush stub: %v", err)
 	}
 	ctx := context.Background()
-	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader"); err != nil {
+	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader"); err != nil {
 		t.Fatalf("cleaning up stale jobs: %v", err)
 	}
 	// Wait for any previous upgrader (agent) pods from prior tests to fully terminate.
@@ -49,7 +49,7 @@ func TestBlockedVersion(t *testing.T) {
 		"agent.image.repository":             "localhost/upgrade-stub",
 		"agent.image.tag":                    "e2e-test",
 		"agent.image.pullPolicy":             "Never",
-		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-upgrader",
+		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-k8s-upgrader",
 		"agent.autoUpgrade.image.tag":        "e2e-test",
 		"agent.autoUpgrade.image.pullPolicy": "Never",
 		// Backend URL pointing to stub
@@ -82,7 +82,7 @@ func TestBlockedVersion(t *testing.T) {
 	// Assert NO Job was created (blocked version — no upgrade attempted)
 	noJobCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	if err := helpers.WaitForNoJob(noJobCtx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader", 30*time.Second); err != nil {
+	if err := helpers.WaitForNoJob(noJobCtx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader", 30*time.Second); err != nil {
 		t.Errorf("expected no job to be created: %v", err)
 	}
 

@@ -19,7 +19,7 @@ const (
 	UpgradeJobPrefix = "kubeadapt-upgrade"
 
 	// UpgradeServiceAccountName is the name of the service account for upgrade jobs
-	UpgradeServiceAccountName = "kubeadapt-upgrader"
+	UpgradeServiceAccountName = "kubeadapt-k8s-upgrader"
 
 	// DefaultChartRepo is the default Helm chart repository
 	DefaultChartRepo = "oci://ghcr.io/kubeadapt/kubeadapt-helm/kubeadapt"
@@ -85,7 +85,7 @@ func CreateUpgradeJob(
 			Labels: map[string]string{
 				"app.kubernetes.io/name":       "kubeadapt",
 				"app.kubernetes.io/component":  "upgrader",
-				"app.kubernetes.io/managed-by": "kubeadapt-upgrader",
+				"app.kubernetes.io/managed-by": "kubeadapt-k8s-upgrader",
 				"kubeadapt.io/upgrade-version": targetVersion,
 			},
 			Annotations: map[string]string{

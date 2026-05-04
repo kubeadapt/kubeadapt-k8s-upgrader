@@ -1,4 +1,4 @@
-site_name: kubeadapt-upgrader
+site_name: kubeadapt-k8s-upgrader
 site_description: In-cluster Helm upgrade operator for the Kubeadapt platform
 
 nav:

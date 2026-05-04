@@ -1,4 +1,4 @@
-module github.com/kubeadapt/kubeadapt-upgrader
+module github.com/kubeadapt/kubeadapt-k8s-upgrader
 
 go 1.26
 

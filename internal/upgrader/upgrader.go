@@ -7,11 +7,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/backend"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/config"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/helm"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/lock"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/platform"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/backend"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/config"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/helm"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/lock"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/platform"
 	"go.uber.org/zap"
 	"k8s.io/client-go/kubernetes"
 )

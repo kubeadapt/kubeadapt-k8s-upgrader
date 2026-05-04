@@ -1,4 +1,4 @@
-# kubeadapt-upgrader
+# kubeadapt-k8s-upgrader
 
 ![Go](https://img.shields.io/badge/Go-1.26-blue)
 

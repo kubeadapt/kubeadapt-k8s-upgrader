@@ -3,7 +3,7 @@ package upgrader
 import (
 	"testing"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/backend"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/backend"
 )
 
 // TestTargetVersionSelection verifies the logic for selecting the target version

@@ -10,10 +10,10 @@ import (
 	_ "github.com/KimMachineGun/automemlimit"
 	_ "go.uber.org/automaxprocs"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/backend"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/config"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/health"
-	"github.com/kubeadapt/kubeadapt-upgrader/internal/upgrader"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/backend"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/config"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/health"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/internal/upgrader"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"k8s.io/client-go/kubernetes"
@@ -27,7 +27,7 @@ func main() {
 		_ = logger.Sync()
 	}()
 
-	logger.Info("Starting kubeadapt-upgrader")
+	logger.Info("Starting kubeadapt-k8s-upgrader")
 
 	// Load configuration from environment
 	cfg, err := config.LoadFromEnv()
@@ -106,7 +106,7 @@ func main() {
 		logger.Error("Health server shutdown error", zap.Error(err))
 	}
 
-	logger.Info("kubeadapt-upgrader shutdown complete")
+	logger.Info("kubeadapt-k8s-upgrader shutdown complete")
 }
 
 // initLogger initializes a zap logger based on LOG_LEVEL environment variable

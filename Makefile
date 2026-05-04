@@ -4,7 +4,7 @@
 BINARY_NAME := upgrader
 BUILD_DIR := ./build
 CMD_PATH := ./cmd/upgrader
-IMAGE_NAME := kubeadapt-upgrader
+IMAGE_NAME := kubeadapt-k8s-upgrader
 IMAGE_TAG ?= dev
 
 # Go settings
@@ -84,7 +84,7 @@ run-local: build-local
 # Build E2E test images (also pulls public images needed by Kind)
 build-e2e-images:
 	@echo "Building E2E test images..."
-	DOCKER_BUILDKIT=1 docker build -t localhost/kubeadapt-upgrader:e2e-test .
+	DOCKER_BUILDKIT=1 docker build -t localhost/kubeadapt-k8s-upgrader:e2e-test .
 	DOCKER_BUILDKIT=1 docker build -t localhost/upgrade-stub:e2e-test -f tests/e2e/stub/Dockerfile .
 	@echo "Pulling public images for Kind (failures ignored if already cached)..."
 	-docker pull ghcr.io/helm/chartmuseum:v0.16.2
@@ -104,7 +104,7 @@ test-e2e-keep: build-e2e-images
 # Clean E2E cluster
 clean-e2e:
 	@echo "Cleaning E2E cluster..."
-	-kind delete cluster --name kubeadapt-upgrader-e2e
+	-kind delete cluster --name kubeadapt-k8s-upgrader-e2e
 	@echo "E2E cluster cleaned"
 
 # Help

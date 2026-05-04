@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/tests/e2e/helpers"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/tests/e2e/helpers"
 )
 
 // TestBackendErrorRecovery verifies that the upgrader handles backend 500 errors
@@ -26,7 +26,7 @@ func TestBackendErrorRecovery(t *testing.T) {
 	if err := stub.Flush(); err != nil {
 		t.Fatalf("flushing stub: %v", err)
 	}
-	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader"); err != nil {
+	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader"); err != nil {
 		t.Fatalf("cleaning up stale jobs: %v", err)
 	}
 	if err := stub.SetMode("error_500"); err != nil {
@@ -39,7 +39,7 @@ func TestBackendErrorRecovery(t *testing.T) {
 		"agent.image.repository":             "localhost/upgrade-stub",
 		"agent.image.tag":                    "e2e-test",
 		"agent.image.pullPolicy":             "Never",
-		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-upgrader",
+		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-k8s-upgrader",
 		"agent.autoUpgrade.image.tag":        "e2e-test",
 		"agent.autoUpgrade.image.pullPolicy": "Never",
 		// Backend URL pointing to stub
@@ -77,7 +77,7 @@ func TestBackendErrorRecovery(t *testing.T) {
 
 	// Step 6: Assert NO upgrade Job was created while backend returned errors.
 	// The upgrader's runCheck() on HTTP error just logs and returns — no Job created.
-	err = helpers.WaitForNoJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader", 10*time.Second)
+	err = helpers.WaitForNoJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader", 10*time.Second)
 	if err != nil {
 		t.Fatalf("expected no upgrade job during error phase, but found one: %v", err)
 	}
@@ -88,7 +88,7 @@ func TestBackendErrorRecovery(t *testing.T) {
 	}
 
 	// Step 8: Wait for the upgrade Job to appear and complete.
-	jobName, succeeded, err := helpers.WaitForJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader", 5*time.Minute)
+	jobName, succeeded, err := helpers.WaitForJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader", 5*time.Minute)
 	if err != nil {
 		t.Fatalf("waiting for upgrade job after recovery: %v", err)
 	}

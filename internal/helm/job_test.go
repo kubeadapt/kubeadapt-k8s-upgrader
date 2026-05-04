@@ -178,7 +178,7 @@ func TestCreateUpgradeJob_JobMetadata(t *testing.T) {
 	// Verify labels
 	assert.Equal(t, "kubeadapt", job.Labels["app.kubernetes.io/name"])
 	assert.Equal(t, "upgrader", job.Labels["app.kubernetes.io/component"])
-	assert.Equal(t, "kubeadapt-upgrader", job.Labels["app.kubernetes.io/managed-by"])
+	assert.Equal(t, "kubeadapt-k8s-upgrader", job.Labels["app.kubernetes.io/managed-by"])
 	assert.Equal(t, targetVersion, job.Labels["kubeadapt.io/upgrade-version"])
 
 	// Verify annotations
@@ -186,7 +186,7 @@ func TestCreateUpgradeJob_JobMetadata(t *testing.T) {
 	assert.Equal(t, targetVersion, job.Annotations["kubeadapt.io/upgrade-to"])
 
 	// Verify pod spec
-	assert.Equal(t, "kubeadapt-upgrader", job.Spec.Template.Spec.ServiceAccountName)
+	assert.Equal(t, "kubeadapt-k8s-upgrader", job.Spec.Template.Spec.ServiceAccountName)
 	assert.Equal(t, 1, len(job.Spec.Template.Spec.Containers))
 	assert.Equal(t, "helm-upgrade", job.Spec.Template.Spec.Containers[0].Name)
 	assert.Equal(t, jobImage, job.Spec.Template.Spec.Containers[0].Image)

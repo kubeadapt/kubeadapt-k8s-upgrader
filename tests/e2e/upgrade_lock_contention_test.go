@@ -10,7 +10,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/kubeadapt/kubeadapt-upgrader/tests/e2e/helpers"
+	"github.com/kubeadapt/kubeadapt-k8s-upgrader/tests/e2e/helpers"
 )
 
 // TestLockContention verifies that the upgrader backs off when a lock is held
@@ -32,7 +32,7 @@ func TestLockContention(t *testing.T) {
 		"agent.image.repository":             "localhost/upgrade-stub",
 		"agent.image.tag":                    "e2e-test",
 		"agent.image.pullPolicy":             "Never",
-		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-upgrader",
+		"agent.autoUpgrade.image.repository": "localhost/kubeadapt-k8s-upgrader",
 		"agent.autoUpgrade.image.tag":        "e2e-test",
 		"agent.autoUpgrade.image.pullPolicy": "Never",
 		// Backend URL pointing to stub
@@ -56,7 +56,7 @@ func TestLockContention(t *testing.T) {
 	ctx := context.Background()
 
 	// Clean up stale jobs and lock ConfigMap from previous test runs.
-	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader"); err != nil {
+	if err := helpers.CleanupJobs(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader"); err != nil {
 		t.Fatalf("cleaning up stale jobs: %v", err)
 	}
 	// Delete stale lock ConfigMap if it exists (ignore not-found error).
@@ -90,7 +90,7 @@ func TestLockContention(t *testing.T) {
 	time.Sleep(20 * time.Second)
 
 	// Assert that no upgrade Job was created while the lock is held.
-	if err := helpers.WaitForNoJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader", 10*time.Second); err != nil {
+	if err := helpers.WaitForNoJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader", 10*time.Second); err != nil {
 		t.Fatalf("upgrader created a job despite lock being held: %v", err)
 	}
 
@@ -110,7 +110,7 @@ func TestLockContention(t *testing.T) {
 
 	// After the lock is released the upgrader should detect the update on the next
 	// check cycle (checkInterval=30s) and create an upgrade Job.
-	jobName, succeeded, err := helpers.WaitForJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-upgrader", 5*time.Minute)
+	jobName, succeeded, err := helpers.WaitForJob(ctx, tc.Clientset(), TestNamespace, "app.kubernetes.io/managed-by=kubeadapt-k8s-upgrader", 5*time.Minute)
 	if err != nil {
 		t.Fatalf("waiting for upgrade job after lock release: %v", err)
 	}
